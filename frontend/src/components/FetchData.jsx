@@ -2,50 +2,41 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 function FetchData() {
-  const [data, setData] = useState(null);
-  const [buttonClicked, setButtonClicked] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const [c, setC] = useState(0);
+  const [questions, setQuestions] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(-1);
+  const [c, setC] = useState(1);
+ 
 
   useEffect(() => {
-    console.log("clicked");
-    if (buttonClicked) {
-      FetchDataFromApi();
-    }
-  }, [buttonClicked]);
+    FetchQuestionsFromApi();
+  }, []);
 
-  
-  const handleButtonClick = () => {
-    setC(c+1);
-    setButtonClicked(!buttonClicked);
-
-  };
-
-  const FetchDataFromApi = async () => {
+  const FetchQuestionsFromApi = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:3000/random-questions"
-      );
-      const questions = response.data;
-      const shuffled = questions.sort(() => 0.5 - Math.random());
-      //   const selected = shuffled.slice(0, 1);
-      const selectedQuestion = shuffled[0];
-      setData(selectedQuestion);
-      console.log(response.data);
+      const response = await axios.get("http://localhost:3000/random-questions");
+      const shuffled = response.data.sort(() => 0.5 - Math.random());
+      setQuestions(shuffled);
+      setCurrentIndex(0);
     } catch (error) {
       console.log("Error fetching data", error);
     }
   };
 
+  const handleButtonClick = () => {
+    if (questions.length > 0) {
+      setCurrentIndex((currentIndex + 1) % questions.length); 
+      setC(c + 1); 
+    }
+  };
+
   return (
-    <div style={{ fontWeight: 'bold', color: 'white', textAlign:"center"}}>
-      {data ? (
+    <div style={{ fontWeight: 'bold', color: 'white', textAlign: "center" }}>
+      {questions.length > 0 && currentIndex !== -1 ? (
         <div>
-          <p>Q{c}. {data.question}</p>
+          <p>Q{c}. {questions[currentIndex].question}</p>
         </div>
       ) : (
-        <p> No data fetched yet</p>
+        <p> Loading...</p>
       )}
       <button onClick={handleButtonClick}>Next</button>
     </div>
