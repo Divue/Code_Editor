@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 function FetchData() {
   const [data, setData] = useState(null);
   const [buttonClicked, setButtonClicked] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const [c, setC] = useState(0);
 
   useEffect(() => {
     console.log("clicked");
@@ -12,8 +15,11 @@ function FetchData() {
     }
   }, [buttonClicked]);
 
+  
   const handleButtonClick = () => {
+    setC(c+1);
     setButtonClicked(!buttonClicked);
+
   };
 
   const FetchDataFromApi = async () => {
@@ -23,10 +29,9 @@ function FetchData() {
       );
       const questions = response.data;
       const shuffled = questions.sort(() => 0.5 - Math.random());
-    //   const selected = shuffled.slice(0, 1);
-        const selectedQuestion = shuffled[0];
-        setData(selectedQuestion)
-    //   console.log(data);
+      //   const selected = shuffled.slice(0, 1);
+      const selectedQuestion = shuffled[0];
+      setData(selectedQuestion);
       console.log(response.data);
     } catch (error) {
       console.log("Error fetching data", error);
@@ -34,10 +39,10 @@ function FetchData() {
   };
 
   return (
-    <div>
+    <div style={{ fontWeight: 'bold', color: 'white', textAlign:"center"}}>
       {data ? (
         <div>
-          <p>{data.question}</p>
+          <p>Q{c}. {data.question}</p>
         </div>
       ) : (
         <p> No data fetched yet</p>

@@ -1,8 +1,11 @@
 [
-    { "id": 1, "question": "What is your favorite anime?" },
-    { "id": 2, "question": "Who is your favorite manga character?" },
-    { "id": 3, "question": "Who is your favorite series?" },
-    { "id": 4, "question": "Who is your favorite movie?" }
+    { "id": 1, "question": " Searching Elements in an Array " },
+    { "id": 2, "question": "Maximum and minimum of an array using minimum number of comparisons" },
+    { "id": 3, "question": "Program to find transpose of a matrix" },
+    { "id": 4, "question": "Rotate by 90 degrees" },
+    { "id": 5, "question": "Missing number in array" },
+    { "id": 6, "question": "Reverse words in a given string" },
+    { "id": 7, "question": "Check if string is rotated by two places" }
     
   ]
   
